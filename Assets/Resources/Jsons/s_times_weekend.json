@@ -1,0 +1,25 @@
+{
+  "trainTimes": [
+  {"hour": 4, "minute": 56},
+  {"hour": 5, "minute": 15}, {"hour": 5, "minute": 36}, {"hour": 5, "minute": 56},
+  {"hour": 6, "minute": 11}, {"hour": 6, "minute": 26}, {"hour": 6, "minute": 41}, {"hour": 6, "minute": 53},
+  {"hour": 7, "minute": 3}, {"hour": 7, "minute": 11}, {"hour": 7, "minute": 20}, {"hour": 7, "minute": 34}, {"hour": 7, "minute": 43}, {"hour": 7, "minute": 53},
+  {"hour": 8, "minute": 3}, {"hour": 8, "minute": 13}, {"hour": 8, "minute": 23}, {"hour": 8, "minute": 33}, {"hour": 8, "minute": 44}, {"hour": 8, "minute": 54},
+  {"hour": 9, "minute": 4}, {"hour": 9, "minute": 14}, {"hour": 9, "minute": 24}, {"hour": 9, "minute": 33}, {"hour": 9, "minute": 44}, {"hour": 9, "minute": 53},
+  {"hour": 10, "minute": 3}, {"hour": 10, "minute": 14}, {"hour": 10, "minute": 25}, {"hour": 10, "minute": 36}, {"hour": 10, "minute": 48}, {"hour": 10, "minute": 57},
+  {"hour": 11, "minute": 7}, {"hour": 11, "minute": 17}, {"hour": 11, "minute": 27}, {"hour": 11, "minute": 37}, {"hour": 11, "minute": 47}, {"hour": 11, "minute": 57},
+  {"hour": 12, "minute": 7}, {"hour": 12, "minute": 17}, {"hour": 12, "minute": 27}, {"hour": 12, "minute": 37}, {"hour": 12, "minute": 47}, {"hour": 12, "minute": 57},
+  {"hour": 13, "minute": 7}, {"hour": 13, "minute": 17}, {"hour": 13, "minute": 27}, {"hour": 13, "minute": 37}, {"hour": 13, "minute": 47}, {"hour": 13, "minute": 57},
+  {"hour": 14, "minute": 5}, {"hour": 14, "minute": 16}, {"hour": 14, "minute": 25}, {"hour": 14, "minute": 36}, {"hour": 14, "minute": 47}, {"hour": 14, "minute": 56},
+  {"hour": 15, "minute": 5}, {"hour": 15, "minute": 16}, {"hour": 15, "minute": 25}, {"hour": 15, "minute": 35}, {"hour": 15, "minute": 47}, {"hour": 15, "minute": 56},
+  {"hour": 16, "minute": 6}, {"hour": 16, "minute": 16}, {"hour": 16, "minute": 28}, {"hour": 16, "minute": 36}, {"hour": 16, "minute": 48}, {"hour": 16, "minute": 56},
+  {"hour": 17, "minute": 5}, {"hour": 17, "minute": 15}, {"hour": 17, "minute": 24}, {"hour": 17, "minute": 35}, {"hour": 17, "minute": 46}, {"hour": 17, "minute": 55},
+  {"hour": 18, "minute": 5}, {"hour": 18, "minute": 15}, {"hour": 18, "minute": 25}, {"hour": 18, "minute": 35}, {"hour": 18, "minute": 45}, {"hour": 18, "minute": 55},
+  {"hour": 19, "minute": 5}, {"hour": 19, "minute": 15}, {"hour": 19, "minute": 25}, {"hour": 19, "minute": 35}, {"hour": 19, "minute": 43}, {"hour": 19, "minute": 55},
+  {"hour": 20, "minute": 5}, {"hour": 20, "minute": 15}, {"hour": 20, "minute": 25}, {"hour": 20, "minute": 35}, {"hour": 20, "minute": 45}, {"hour": 20, "minute": 58},
+  {"hour": 21, "minute": 9}, {"hour": 21, "minute": 22}, {"hour": 21, "minute": 36}, {"hour": 21, "minute": 48}, {"hour": 21, "minute": 59},
+  {"hour": 22, "minute": 11}, {"hour": 22, "minute": 23}, {"hour": 22, "minute": 36}, {"hour": 22, "minute": 47},
+  {"hour": 23, "minute": 1}, {"hour": 23, "minute": 16}, {"hour": 23, "minute": 31}, {"hour": 23, "minute": 45}, {"hour": 23, "minute": 59},
+  {"hour": 24, "minute": 13}
+  ]
+}
