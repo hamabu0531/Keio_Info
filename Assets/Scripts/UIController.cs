@@ -69,7 +69,8 @@ public class UIController : MonoBehaviour
 
     public void Update_DayInfo(int year, int month, int day, string dayName)
     {
-        dayInfo.text = year + "”N" + month + "Œ" + day + "“ú(" + "‹à" + ")";
+        string dayNameJp = Convert_Day_To_Jp(dayName);
+        dayInfo.text = year + "”N" + month + "Œ" + day + "“ú(" + dayNameJp + ")";
     }
 
     public void Update_Weekday(bool isWeekDay)
@@ -85,6 +86,37 @@ public class UIController : MonoBehaviour
             weekend_Weekday.transform.GetChild(0).gameObject.SetActive(false);
             weekend_Weekday.transform.GetChild(1).gameObject.SetActive(true);
             weekend_Weekday.GetComponent<Image>().color = Color.magenta;
+        }
+    }
+
+    string Convert_Day_To_Jp(string dayName)
+    {
+        switch (dayName)
+        {
+            case "Monday":
+                return "Œ";
+                break;
+            case "Tuesday":
+                return "‰Î";
+                break;
+            case "Wednesday":
+                return "…";
+                break;
+            case "Thursday":
+                return "–Ø";
+                break;
+            case "Friday":
+                return "‹à";
+                break;
+            case "Saturday":
+                return "“y";
+                break;
+            case "Sunday":
+                return "“ú";
+                break;
+            default:
+                return dayName;
+                break;
         }
     }
 }
