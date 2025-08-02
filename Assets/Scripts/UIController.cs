@@ -95,28 +95,20 @@ public class UIController : MonoBehaviour
         {
             case "Monday":
                 return "Œ";
-                break;
             case "Tuesday":
                 return "‰Î";
-                break;
             case "Wednesday":
                 return "…";
-                break;
             case "Thursday":
                 return "–Ø";
-                break;
             case "Friday":
                 return "‹à";
-                break;
             case "Saturday":
                 return "“y";
-                break;
             case "Sunday":
                 return "“ú";
-                break;
             default:
                 return dayName;
-                break;
         }
     }
 }
