@@ -38,23 +38,25 @@ public class TimeManager : MonoBehaviour
 
         int firstIndex = -1, secondIndex = -1;
 
-        // 次の時刻を検索(八王子方面)
-        for (int i = 0; i < h_weekday.trainTimes.Length; i++)
+        TrainSchedule h, s;
+        // 平日スケジュール
+        if (isWeekDay())
         {
-            TrainTime h;
-            // 平日スケジュール
-            if (isWeekDay())
-            {
-                h = h_weekday.trainTimes[i];
-            }
-            // 休日スケジュール
-            else
-            {
-                h = h_weekend.trainTimes[i];
-            }
+            h = h_weekday;
+            s = s_weekday;
+        }
+        // 休日スケジュール
+        else
+        {
+            h = h_weekend;
+            s = s_weekend;
+        }
 
+        // 次の時刻を検索(八王子方面)
+        for (int i = 0; i < h.trainTimes.Length; i++)
+        {
             // hourは同じで分が過ぎてる
-            if (currentTime.Hour == h.hour && currentTime.Minute < h.minute)
+            if (currentTime.Hour == h.trainTimes[i].hour && currentTime.Minute < h.trainTimes[i].minute)
             {
                 firstIndex = i;
                 secondIndex = firstIndex + 1;
@@ -62,7 +64,7 @@ public class TimeManager : MonoBehaviour
             }
 
             // hourが過ぎてる
-            if (currentTime.Hour < h.hour)
+            if (currentTime.Hour < h.trainTimes[i].hour)
             {
                 firstIndex = i;
                 secondIndex = firstIndex + 1;
@@ -73,17 +75,17 @@ public class TimeManager : MonoBehaviour
         // 先発、次発ともにあり
         if (firstIndex != -1)
         {
-            int first_hour = h_weekday.trainTimes[firstIndex].hour;
-            int first_minute = h_weekday.trainTimes[firstIndex].minute;
-            int second_hour = h_weekday.trainTimes[secondIndex].hour;
-            int second_minute = h_weekday.trainTimes[secondIndex].minute;
+            int first_hour = h.trainTimes[firstIndex].hour;
+            int first_minute = h.trainTimes[firstIndex].minute;
+            int second_hour = h.trainTimes[secondIndex].hour;
+            int second_minute = h.trainTimes[secondIndex].minute;
             uIController.Update_h_time(first_hour, first_minute, second_hour, second_minute);
         }
         // 次発なし
         else if (secondIndex != -1)
         {
-            int first_hour = h_weekday.trainTimes[firstIndex].hour;
-            int first_minute = h_weekday.trainTimes[firstIndex].minute;
+            int first_hour = h.trainTimes[firstIndex].hour;
+            int first_minute = h.trainTimes[firstIndex].minute;
             uIController.Update_h_time(first_hour, first_minute, -1, -1);
         }
         // 先発、次発ともになし
@@ -96,22 +98,12 @@ public class TimeManager : MonoBehaviour
         secondIndex = -1;
 
         // 次の時刻を検索(新宿方面)
-        for (int i = 0; i < s_weekday.trainTimes.Length; i++)
+        for (int i = 0; i < s.trainTimes.Length; i++)
         {
-            TrainTime s;
-            // 平日スケジュール
-            if (isWeekDay())
-            {
-                s = s_weekday.trainTimes[i];
-            }
-            // 休日スケジュール
-            else
-            {
-                s = s_weekend.trainTimes[i];
-            }
+
 
             // hourは同じで分が過ぎてる
-            if (currentTime.Hour == s.hour && currentTime.Minute < s.minute)
+            if (currentTime.Hour == s.trainTimes[i].hour && currentTime.Minute < s.trainTimes[i].minute)
             {
                 firstIndex = i;
                 secondIndex = firstIndex + 1;
@@ -119,7 +111,7 @@ public class TimeManager : MonoBehaviour
             }
 
             // hourが過ぎてる
-            if (currentTime.Hour < s.hour)
+            if (currentTime.Hour < s.trainTimes[i].hour)
             {
                 firstIndex = i;
                 secondIndex = firstIndex + 1;
@@ -130,17 +122,17 @@ public class TimeManager : MonoBehaviour
         // 先発、次発ともにあり
         if (firstIndex != -1)
         {
-            int first_hour = s_weekday.trainTimes[firstIndex].hour;
-            int first_minute = s_weekday.trainTimes[firstIndex].minute;
-            int second_hour = s_weekday.trainTimes[secondIndex].hour;
-            int second_minute = s_weekday.trainTimes[secondIndex].minute;
+            int first_hour = s.trainTimes[firstIndex].hour;
+            int first_minute = s.trainTimes[firstIndex].minute;
+            int second_hour = s.trainTimes[secondIndex].hour;
+            int second_minute = s.trainTimes[secondIndex].minute;
             uIController.Update_s_time(first_hour, first_minute, second_hour, second_minute);
         }
         // 次発なし
         else if (secondIndex != -1)
         {
-            int first_hour = s_weekday.trainTimes[firstIndex].hour;
-            int first_minute = s_weekday.trainTimes[firstIndex].minute;
+            int first_hour = s.trainTimes[firstIndex].hour;
+            int first_minute = s.trainTimes[firstIndex].minute;
             uIController.Update_s_time(first_hour, first_minute, -1, -1);
         }
         // 先発、次発ともになし
