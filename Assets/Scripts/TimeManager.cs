@@ -36,19 +36,19 @@ public class TimeManager : MonoBehaviour
 
     void UpdateTimeInfo()
     {
-         currentTime = DateTime.Now;
+        currentTime = DateTime.Now;
         // ƒfƒoƒbƒO—p
-        //currentTime = new DateTime(2025, 8, 11, 18, 6, 54);
+        //currentTime = new DateTime(2025, 11, 24, 18, 6, 54);
 
         uIController.Update_DayInfo(currentTime.Year, currentTime.Month, currentTime.Day, currentTime.DayOfWeek.ToString());
         uIController.Update_ClockTime(currentTime.Hour, currentTime.Minute);
-        uIController.Update_Weekday(isWeekday());
+        uIController.Update_Weekday(isWeekday(currentTime));
 
         int firstIndex = -1, secondIndex = -1;
 
         TrainSchedule h, s;
         // •½“úƒXƒPƒWƒ…[ƒ‹
-        if (isWeekday())
+        if (isWeekday(currentTime))
         {
             h = h_weekday;
             s = s_weekday;
@@ -150,49 +150,49 @@ public class TimeManager : MonoBehaviour
         }
     }
     
-    bool isWeekday()
+    bool isWeekday(DateTime dt)
     {
         // “y“ú
-        if (currentTime.DayOfWeek == DayOfWeek.Sunday || currentTime.DayOfWeek == DayOfWeek.Saturday)
+        if (dt.DayOfWeek == DayOfWeek.Sunday || dt.DayOfWeek == DayOfWeek.Saturday)
         {
             return false;
         }
 
         // j“ú‚©‚Ç‚¤‚©
-        return !isHoliday();
+        return !isHoliday(dt);
     }
 
-    bool isHoliday()
+    bool isHoliday(DateTime dt)
     {
         // ŒÅ’è“ú‚Ìj“ú‚©‚Ç‚¤‚©
-        if (isFixedHoliday(currentTime))
+        if (isFixedHoliday(dt))
         {
             return true;
         }
 
         // ‘ænŒ—j“ú‚Ìj“ú‚©‚Ç‚¤‚©
-        if ((currentTime.Month == 1 && isNthMonday(2)) ||
-            (currentTime.Month == 7 && isNthMonday(3)) ||
-            (currentTime.Month == 9 && isNthMonday(3)) ||
-            (currentTime.Month == 10 && isNthMonday(2)))
+        if ((dt.Month == 1 && isNthMonday(dt, 2)) ||
+            (dt.Month == 7 && isNthMonday(dt, 3)) ||
+            (dt.Month == 9 && isNthMonday(dt, 3)) ||
+            (dt.Month == 10 && isNthMonday(dt, 2)))
         {
             return true;
         }
 
         // t•ª‚Ì“ú‚©‚Ç‚¤‚©
-        if (isShunbunDay(currentTime))
+        if (isShunbunDay(dt))
         {
             return true;
         }
 
         // H•ª‚Ì“ú
-        if (isShubunDay(currentTime))
+        if (isShubunDay(dt))
         {
             return true;
         }
 
         // U‘Ö‹x“ú
-        DateTime yesterday = currentTime.AddDays(-1);
+        DateTime yesterday = dt.AddDays(-1);
         if (yesterday.DayOfWeek == DayOfWeek.Sunday &&
             (isFixedHoliday(yesterday) || isShubunDay(yesterday) || isShunbunDay(yesterday)))
         {
@@ -206,21 +206,21 @@ public class TimeManager : MonoBehaviour
         //================================
 
         // ‘ænŒ—j“ú‚Ìj“ú
-        bool isNthMonday(int n)
+        bool isNthMonday(DateTime dt_f, int n)
         {
-            if (currentTime.DayOfWeek != DayOfWeek.Monday)
+            if (dt_f.DayOfWeek != DayOfWeek.Monday)
             {
                 return false ;
             }
-            int week = (currentTime.Day - 1) / 7 + 1;
+            int week = (dt_f.Day - 1) / 7 + 1;
             return week == n;
         }
 
         // ŒÅ’è“ú‚Ì‹x“ú
-        bool isFixedHoliday(DateTime dt)
+        bool isFixedHoliday(DateTime dt_f)
         {
-            int month = dt.Month;
-            int day = dt.Day;
+            int month = dt_f.Month;
+            int day = dt_f.Day;
             List<(int, int)> fixedHolidays = new List<(int, int)>()
             {
                 (1, 1),    // Œ³“ú
@@ -242,11 +242,11 @@ public class TimeManager : MonoBehaviour
         }
 
         // t•ª‚Ì“ú
-        bool isShunbunDay(DateTime dt)
+        bool isShunbunDay(DateTime dt_f)
         {
-            int year = dt.Year;
-            int month = dt.Month;
-            int day = dt.Day;
+            int year = dt_f.Year;
+            int month = dt_f.Month;
+            int day = dt_f.Day;
             int shunbunDay = (int)(20.8431 + 0.242194 * (year - 1980) - (int)((year - 1980) / 4));
             if (month == 3 && day == shunbunDay)
             {
@@ -256,11 +256,11 @@ public class TimeManager : MonoBehaviour
         }
 
         // H•ª‚Ì“ú
-        bool isShubunDay(DateTime dt)
+        bool isShubunDay(DateTime dt_f)
         {
-            int year = dt.Year;
-            int month = dt.Month;
-            int day = dt.Day;
+            int year = dt_f.Year;
+            int month = dt_f.Month;
+            int day = dt_f.Day;
             int shubunDay = (int)(23.2488 + 0.242194 * (year - 1980) - (int)((year - 1980) / 4));
             if (month == 9 && day == shubunDay)
             {
