@@ -34,6 +34,7 @@ public class TimeManager : MonoBehaviour
     {
         currentTime = DateTime.Now;
         uIController.Update_DayInfo(currentTime.Year, currentTime.Month, currentTime.Day, currentTime.DayOfWeek.ToString());
+        uIController.Update_ClockTime(currentTime.Hour, currentTime.Minute);
         uIController.Update_Weekday(isWeekDay());
 
         int firstIndex = -1, secondIndex = -1;
