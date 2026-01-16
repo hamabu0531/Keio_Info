@@ -16,7 +16,7 @@ Unityで制作した、駅のデジタルサイネージ風の電車出発案内
 
 ## スクリーンショット
 
-![image](https://user-images.githubusercontent.com/xxxxxxxx/xxxxxxxxxxxxxxxx.png)
+<img width="1920" height="1080" alt="Keio_Info" src="https://github.com/user-attachments/assets/799380fb-da3a-4150-89a9-89f654f6e316" />
 
 ## セットアップと実行方法
 
