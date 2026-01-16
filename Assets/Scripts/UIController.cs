@@ -4,8 +4,11 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    [SerializeField] Text first_h_time, second_h_time, first_s_time, second_s_time, dayInfo;
+    [SerializeField] Text first_h_time, second_h_time, first_s_time, second_s_time, dayInfo, timeInfo;
     [SerializeField] GameObject weekend_Weekday;
+    [SerializeField] Sprite[] numSprites;
+    [SerializeField] Image[] clockImages; // Œv‚Ì4Œ…‚É‘Î‰
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -73,6 +76,19 @@ public class UIController : MonoBehaviour
         dayInfo.text = year + "”N" + month + "Œ" + day + "“ú(" + dayNameJp + ")";
     }
 
+    public void Update_ClockTime(int hour, int minute)
+    {
+        int hour_first = hour / 10;
+        int hour_second = hour % 10;
+        int minute_first = minute / 10;
+        int minute_second = minute % 10;
+
+        clockImages[0].sprite = numSprites[hour_first];
+        clockImages[1].sprite = numSprites[hour_second];
+        clockImages[2].sprite = numSprites[minute_first];
+        clockImages[3].sprite = numSprites[minute_second];
+    }
+
     public void Update_Weekday(bool isWeekDay)
     {
         if (isWeekDay)
@@ -95,28 +111,20 @@ public class UIController : MonoBehaviour
         {
             case "Monday":
                 return "Œ";
-                break;
             case "Tuesday":
                 return "‰Î";
-                break;
             case "Wednesday":
                 return "…";
-                break;
             case "Thursday":
                 return "–Ø";
-                break;
             case "Friday":
                 return "‹à";
-                break;
             case "Saturday":
                 return "“y";
-                break;
             case "Sunday":
                 return "“ú";
-                break;
             default:
                 return dayName;
-                break;
         }
     }
 }

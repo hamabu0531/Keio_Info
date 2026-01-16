@@ -1,5 +1,9 @@
+using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
@@ -33,14 +37,18 @@ public class TimeManager : MonoBehaviour
     void UpdateTimeInfo()
     {
         currentTime = DateTime.Now;
+        // ƒfƒoƒbƒO—p
+        //currentTime = new DateTime(2025, 11, 24, 18, 6, 54);
+
         uIController.Update_DayInfo(currentTime.Year, currentTime.Month, currentTime.Day, currentTime.DayOfWeek.ToString());
-        uIController.Update_Weekday(isWeekDay());
+        uIController.Update_ClockTime(currentTime.Hour, currentTime.Minute);
+        uIController.Update_Weekday(isWeekday(currentTime));
 
         int firstIndex = -1, secondIndex = -1;
 
         TrainSchedule h, s;
         // •½“úƒXƒPƒWƒ…[ƒ‹
-        if (isWeekDay())
+        if (isWeekday(currentTime))
         {
             h = h_weekday;
             s = s_weekday;
@@ -142,12 +150,123 @@ public class TimeManager : MonoBehaviour
         }
     }
     
-    bool isWeekDay()
+    bool isWeekday(DateTime dt)
     {
-        if (currentTime.DayOfWeek == DayOfWeek.Sunday || currentTime.DayOfWeek == DayOfWeek.Saturday)
+        // “y“ú
+        if (dt.DayOfWeek == DayOfWeek.Sunday || dt.DayOfWeek == DayOfWeek.Saturday)
         {
             return false;
         }
-        return true;
+
+        // j“ú‚©‚Ç‚¤‚©
+        return !isHoliday(dt);
+    }
+
+    bool isHoliday(DateTime dt)
+    {
+        // ŒÅ’è“ú‚Ìj“ú‚©‚Ç‚¤‚©
+        if (isFixedHoliday(dt))
+        {
+            return true;
+        }
+
+        // ‘ænŒ—j“ú‚Ìj“ú‚©‚Ç‚¤‚©
+        if ((dt.Month == 1 && isNthMonday(dt, 2)) ||
+            (dt.Month == 7 && isNthMonday(dt, 3)) ||
+            (dt.Month == 9 && isNthMonday(dt, 3)) ||
+            (dt.Month == 10 && isNthMonday(dt, 2)))
+        {
+            return true;
+        }
+
+        // t•ª‚Ì“ú‚©‚Ç‚¤‚©
+        if (isShunbunDay(dt))
+        {
+            return true;
+        }
+
+        // H•ª‚Ì“ú
+        if (isShubunDay(dt))
+        {
+            return true;
+        }
+
+        // U‘Ö‹x“ú
+        DateTime yesterday = dt.AddDays(-1);
+        if (yesterday.DayOfWeek == DayOfWeek.Sunday &&
+            (isFixedHoliday(yesterday) || isShubunDay(yesterday) || isShunbunDay(yesterday)))
+        {
+            return true;
+        }
+
+        return false;
+
+        //================================
+        // ƒ[ƒJƒ‹ŠÖ”
+        //================================
+
+        // ‘ænŒ—j“ú‚Ìj“ú
+        bool isNthMonday(DateTime dt_f, int n)
+        {
+            if (dt_f.DayOfWeek != DayOfWeek.Monday)
+            {
+                return false ;
+            }
+            int week = (dt_f.Day - 1) / 7 + 1;
+            return week == n;
+        }
+
+        // ŒÅ’è“ú‚Ì‹x“ú
+        bool isFixedHoliday(DateTime dt_f)
+        {
+            int month = dt_f.Month;
+            int day = dt_f.Day;
+            List<(int, int)> fixedHolidays = new List<(int, int)>()
+            {
+                (1, 1),    // Œ³“ú
+                (2, 11),   // Œš‘‹L”O‚Ì“ú
+                (2, 23),   // “Vc’a¶“ú
+                (4, 29),   // º˜a‚Ì“ú
+                (5, 3),    // Œ›–@‹L”O“ú
+                (5, 4),    // ‚İ‚Ç‚è‚Ì“ú
+                (5, 5),    // ‚±‚Ç‚à‚Ì“ú
+                (8, 11),   // R‚Ì“ú
+                (11, 3),   // •¶‰»‚Ì“ú
+                (11, 23),  // ‹Î˜JŠ´Ó‚Ì“ú
+            };
+            if (fixedHolidays.Any(d => d.Item1 == month && d.Item2 == day))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        // t•ª‚Ì“ú
+        bool isShunbunDay(DateTime dt_f)
+        {
+            int year = dt_f.Year;
+            int month = dt_f.Month;
+            int day = dt_f.Day;
+            int shunbunDay = (int)(20.8431 + 0.242194 * (year - 1980) - (int)((year - 1980) / 4));
+            if (month == 3 && day == shunbunDay)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        // H•ª‚Ì“ú
+        bool isShubunDay(DateTime dt_f)
+        {
+            int year = dt_f.Year;
+            int month = dt_f.Month;
+            int day = dt_f.Day;
+            int shubunDay = (int)(23.2488 + 0.242194 * (year - 1980) - (int)((year - 1980) / 4));
+            if (month == 9 && day == shubunDay)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
